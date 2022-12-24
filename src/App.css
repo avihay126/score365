@@ -1,38 +1,46 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+span[id="navLink"]{
+  font-size: 35px;
+  margin: 20px;
+}
+span[id="navLink"]:hover{
+  background: blue;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+div[id="pageTitle"]{
+  font-size: 40px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to right, #2a7de1, #d3cdbd);
+  padding: 10px 20px;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+table[id="leaguesBar"]{
+  background: black;
+  width: fit-content;
+  margin: 30px;
+  border: 2px solid black;
+  border-spacing: 0 5px;
+
+
+
+
+}
+tr[id="rowBar"]{
+  font-size: 30px;
+  background: rgba(241,232,232,0.68);
+
 }
 
-.App-link {
-  color: #61dafb;
+
+
+div[class="App"]{
+  background: #d3cdbd;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
