@@ -12,9 +12,9 @@ class HistoryResultsPage extends React.Component{
                 <div >
                     <PrintPageTitle  title={this.props.title}/>
                 </div>
-                <div>
-                    <PrintLeaguesBar leagues={this.props.leagues}/>
-                </div>
+                {/*<div>*/}
+                {/*    <PrintLeaguesBar leagues={this.props.leagues}/>*/}
+                {/*</div>*/}
             </div>
 
         );

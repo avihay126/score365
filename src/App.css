@@ -1,14 +1,17 @@
 .App {
   text-align: center;
 }
-span[id="navLink"]{
+
+#navLink{
+  color: black;
   font-size: 35px;
   margin: 20px;
-}
-span[id="navLink"]:hover{
-  background: blue;
-}
 
+}
+#navLink[class="isActive"]{
+  color: white;
+  background: dimgrey;
+}
 
 div[id="pageTitle"]{
   font-size: 40px;
@@ -24,18 +27,24 @@ div[id="pageTitle"]{
 table[id="leaguesBar"]{
   background: black;
   width: fit-content;
-  margin: 30px;
   border: 2px solid black;
   border-spacing: 0 5px;
 
-
-
+  position: absolute;  left: 50px; top: 150px;
 
 }
 tr[id="rowBar"]{
   font-size: 30px;
   background: rgba(241,232,232,0.68);
+  cursor: pointer;
 
+}
+table[id="leagueTable"]{
+  width: fit-content;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 4px solid black;
 }
 
 
@@ -43,4 +52,5 @@ tr[id="rowBar"]{
 div[class="App"]{
   background: #d3cdbd;
 }
+
 

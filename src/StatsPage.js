@@ -13,9 +13,9 @@ class StatsPage extends React.Component{
                     <PrintPageTitle  title={this.props.title}/>
                 </div>
 
-                <div>
-                    <PrintLeaguesBar leagues={this.props.leagues}/>
-                </div>
+                {/*<div>*/}
+                {/*    <PrintLeaguesBar leagues={this.props.leagues}/>*/}
+                {/*</div>*/}
             </div>
         );
 

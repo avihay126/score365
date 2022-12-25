@@ -5,9 +5,10 @@ class HomePage extends React.Component{
     state={
 
     }
+
     render() {
         return(
-            <div >
+            <div  >
                 <PrintPageTitle  title={"Home"}/>
             </div>
         );
