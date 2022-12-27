@@ -1,99 +1,133 @@
 import React from "react";
 import PrintPageTitle from "./PrintPageTitle";
-import PrintLeaguesBar from "./PrintLeaguesBar";
 import axios from "axios";
 import PrintTable from "./PrintTable";
 
-const teamView={
-    name:"",
-    numOfMatches:"",
-    scored:"",
-    conceded:"",
-    difference:"",
-    points:""
+const teamView = {
+    name: "",
+    numOfMatches: "",
+    scored: "",
+    conceded: "",
+    difference: "",
+    points: ""
 }
 
 class TablePage extends React.Component {
 
     state = {
-        teams:[],
-        chosenLeague:1,
-        t:[],
-        load: false
+        teams: [],
+        chosenLeague: 1,
+        t: [],
+        load: false,
+        x: []
 
 
     }
+
     componentDidMount() {
-       this.setChosenLeague(this.props.league)
+        this.setChosenLeague(1);
 
 
     }
+
     setChosenLeague = (league) => {
         axios.get("https://app.seker.live/fm1/teams/" + league).then((response) => {
+            let teams=response.data;
             this.setState({
-                teams:response.data
+                teams: teams
             })
+            this.a(teams);
+
+
         });
     }
-    getTeamMatches=(leagueId, teamId,i,teamName)=>{
-        let x=[];
-        axios.get("https://app.seker.live/fm1/history/"+leagueId+"/"+teamId).then((response)=>{
-            let matches=response.data;
-            debugger;
-            let name=teamName;
-            let numOfMatches=matches.length;
-            let scored=this.getTeamGoals(matches,teamId,true);
-            let conceded=this.getTeamGoals(matches,teamId,false);
-            let difference=scored-conceded;
 
-            const team={
-                name: name,
-                numOfMatches:numOfMatches,
-                scored: scored,
-                conceded:conceded,
-                difference:difference
-            }
 
-            x.push(team);
-            this.setState({
-                t:x
-            });
-        });
-
-    }
-
-    getTeamGoals=(matches,teamId,conceded)=>{
-        let home=true;
-        let scored=0;
+    getTeamGoals = (matches, teamId, conceded) => {
+        let home = true;
+        let scored = 0;
         for (let i = 0; i < matches.length; i++) {
-            if (matches[i].awayTeam.id===teamId){
-                home=!conceded;
-            }else {
-                home=conceded;
+            if (matches[i].awayTeam.id === teamId) {
+                home = !conceded;
+            } else {
+                home = conceded;
             }
-            let goals=matches[i].goals;
+            let goals = matches[i].goals;
             for (let j = 0; j < goals.length; j++) {
-                if (goals[j].home===home){
+                if (goals[j].home === home) {
                     scored++;
                 }
             }
         }
         return scored;
     }
-
-    initTable=()=>{
-
-
-        let points=0
-
-        for (let i = 0; i < this.state.teams.length; i++) {
-            this.getTeamMatches(this.state.teams[i].league.id,this.state.teams[i].id,i,this.state.teams[i].name);
+    calculateTeamPoints = (matches, teamId) => {
+        let wins = 0;
+        let draw=0;
+        let points=0;
+        let home = true;
+        debugger;
+        for (let i = 0; i < matches.length; i++) {
+            if (matches[i].awayTeam.id === teamId) {
+                home = false;
+            } else {
+                home = true;
+            }
+            let awayGoals = 0;
+            let homeGoals = 0;
+            const gameGoals = matches[i].goals;
+            for (let j = 0; j < gameGoals.length; j++) {
+                if (gameGoals[j].home === true) {
+                    homeGoals++;
+                } else {
+                    awayGoals++;
+                }
+            }
+                if (awayGoals===homeGoals){
+                    draw++;
+                }else if (awayGoals>homeGoals&&home===false){
+                    wins++;
+                }else if (awayGoals<homeGoals&&home===true){
+                    wins++;
+                }
         }
-
-
+        points=(wins*3)+draw;
+        return [points, wins, draw];
     }
+    a = (teams) => {
+        let y = [];
+        for (let i = 0; i < teams.length; i++) {
+            axios.get("https://app.seker.live/fm1/history/" + teams[i].league.id + "/" + teams[i].id).then((response) => {
+                let matches = response.data;
+                let name = teams[i].name;
+                let numOfMatches = matches.length;
+                let scored = this.getTeamGoals(matches, teams[i].id, true);
+                let conceded = this.getTeamGoals(matches, teams[i].id, false);
+                let difference = scored - conceded;
+                let array = this.calculateTeamPoints(matches, teams[i].id);
+                let points=array[0];
+                let wins=array[1];
+                let draw=array[2];
+                let lose=matches.length-wins-draw;
+                const team = {
+                    name: name,
+                    numOfMatches: numOfMatches,
+                    scored: scored,
+                    conceded: conceded,
+                    difference: difference,
+                    wins:wins,
+                    draw:draw,
+                    lose:lose,
+                    points:points
+                }
+                y.push(team);
+                this.setState({
+                    x: y
+                })
 
-
+            })
+        }
+    }
 
 
     render() {
@@ -101,11 +135,10 @@ class TablePage extends React.Component {
             <div>
                 <div>
                     <PrintPageTitle title={this.props.title}/>
-                    <button onClick={this.initTable}></button>
                 </div>
 
                 <div>
-                    <PrintTable teams={this.state.teams}/>
+                    <PrintTable teams={this.state.x}/>
                 </div>
             </div>
 

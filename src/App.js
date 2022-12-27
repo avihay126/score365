@@ -24,6 +24,7 @@ class App extends React.Component{
         leagues:[],
         chosenLeague: 1
 
+
     }
     componentDidMount() {
     this.getLeagues();
@@ -64,7 +65,7 @@ class App extends React.Component{
                 <Routes>
                     <Route path={"/"} element={<HomePage  />}/>
                     <Route path={"*"} element={<NoPage/>}/>
-                    <Route path={"/table"} element={<TablePage title={"Table"}leagues={this.state.leagues} league={this.state.chosenLeague} ref={this.childRef}/>}/>
+                    <Route path={"/table"} element={<TablePage title={"Table"}leagues={this.state.leagues}ref={this.childRef}/>}/>
                     <Route path={"/history"} element={<HistoryResultsPage title={"History Results"} />}/>
                     <Route path={"/topScorer"} element={<TopScorerPage title={"Top Scorer"}/>}/>
                     <Route path={"/stats"} element={<StatsPage title={"Statistics"}/>}/>
