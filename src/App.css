@@ -39,6 +39,12 @@ tr[id="rowBar"]{
   cursor: pointer;
 
 }
+tr[id="rowTable"]{
+  font-size: 20px;
+  background: rgba(241,232,232,0.68);
+  cursor: pointer;
+
+}
 table[id="leagueTable"]{
   width: fit-content;
   text-align: center;

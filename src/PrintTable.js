@@ -19,7 +19,7 @@ function PrintTable(props){
                     </tr>
                     {props.teams.map((team) => {
                         return (
-                                <tr>
+                                <tr id={"rowTable"}>
                                     <td>
                                         {team.name}
                                     </td>
